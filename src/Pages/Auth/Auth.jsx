@@ -1,90 +1,183 @@
 import React, { useState } from "react";
-import { TextField, Button } from "@mui/material";
+import {
+  TextField,
+  Button,
+  IconButton,
+  Typography,
+  Box,
+  Divider,
+  Fade,
+} from "@mui/material";
+import { Google, Facebook, LinkedIn } from "@mui/icons-material";
+
+// -------------------------------------------------------------------
+// THIS LINE CONNECTS THE CSS FILE
+import "../../styles/pages/auth/Authpage.css"; 
+// -------------------------------------------------------------------
 
 export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(false);
 
+  // Helper styles for TextField to keep the unique glassmorphism look
+  const textFieldInputProps = {
+    style: {
+      backgroundColor: "rgba(255,255,255,0.2)",
+      color: "white",
+    },
+  };
+  const textFieldLabelProps = { style: { color: "#ddd" } };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="relative flex w-[900px] h-[550px] bg-white rounded-2xl shadow-lg overflow-hidden">
-        {/* Left Panel (Sign In / Sign Up Form) */}
-        <div className="w-1/2 flex flex-col justify-center items-center p-8">
-          {isSignUp ? (
-            <div className="w-full max-w-sm text-center">
-              <h2 className="text-3xl font-semibold mb-3">Create Account</h2>
-              <div className="flex justify-center gap-3 mb-3">
-                <span className="cursor-pointer text-xl">🔵</span>
-                <span className="cursor-pointer text-xl">🔴</span>
-                <span className="cursor-pointer text-xl">⚫</span>
+    <div className="auth-page-container">
+      {/* Glassmorphic Card */}
+      <div className="auth-card">
+        {/* Left Section (Form) */}
+        <div className="auth-section auth-form-section">
+          <Fade in timeout={800}>
+            <div className="auth-form-content">
+              <Typography
+                variant="h4"
+                fontWeight={700}
+                color="white"
+                gutterBottom
+              >
+                {isSignUp ? "Create Account" : "Welcome Back!"}
+              </Typography>
+
+              <Typography variant="body2" color="white" className="auth-subtitle">
+                {isSignUp
+                  ? "Join our community and get started in seconds!"
+                  : "Sign in to continue your journey with us."}
+              </Typography>
+
+              {/* Social Icons (MUI SX kept for brevity) */}
+              <div className="auth-social-icons">
+                <IconButton sx={{ bgcolor: "rgba(255,255,255,0.15)" }}>
+                  <Facebook sx={{ color: "white" }} />
+                </IconButton>
+                <IconButton sx={{ bgcolor: "rgba(255,255,255,0.15)" }}>
+                  <Google sx={{ color: "white" }} />
+                </IconButton>
+                <IconButton sx={{ bgcolor: "rgba(255,255,255,0.15)" }}>
+                  <LinkedIn sx={{ color: "white" }} />
+                </IconButton>
               </div>
-              <p className="text-gray-500 mb-4">or use your email for registration</p>
-              <form className="flex flex-col gap-3">
-                <TextField label="Name" variant="outlined" size="small" fullWidth />
-                <TextField label="Email" variant="outlined" size="small" fullWidth />
-                <TextField label="Password" type="password" variant="outlined" size="small" fullWidth />
-                <Button variant="contained" color="error" className="!mt-3" fullWidth>
-                  Sign Up
+
+              <Divider sx={{ borderColor: "rgba(255,255,255,0.3)", mb: 3 }}>
+                <Typography color="white" variant="body2">
+                  or use your email
+                </Typography>
+              </Divider>
+
+              {/* Form */}
+              <Box component="form" className="auth-form">
+                {isSignUp && (
+                  <TextField
+                    label="Full Name"
+                    variant="filled"
+                    size="small"
+                    fullWidth
+                    InputProps={textFieldInputProps}
+                    InputLabelProps={textFieldLabelProps}
+                  />
+                )}
+                <TextField
+                  label="Email"
+                  variant="filled"
+                  size="small"
+                  fullWidth
+                  InputProps={textFieldInputProps}
+                  InputLabelProps={textFieldLabelProps}
+                />
+                <TextField
+                  label="Password"
+                  type="password"
+                  variant="filled"
+                  size="small"
+                  fullWidth
+                  InputProps={textFieldInputProps}
+                  InputLabelProps={textFieldLabelProps}
+                />
+
+                {!isSignUp && (
+                  <Typography
+                    variant="body2"
+                    align="right"
+                    className="auth-forgot-password"
+                  >
+                    Forgot Password?
+                  </Typography>
+                )}
+
+                <Button
+                  variant="contained"
+                  // MUI SX styles kept for component customization
+                  sx={{
+                    mt: 3,
+                    py: 1.2,
+                    borderRadius: "25px",
+                    backgroundColor: "#fff",
+                    color: "#6b21a8",
+                    fontWeight: "bold",
+                    textTransform: "none",
+                    fontSize: "1rem",
+                    boxShadow: "0px 4px 15px rgba(0,0,0,0.3)",
+                    "&:hover": {
+                      backgroundColor: "#e0e0e0",
+                    },
+                  }}
+                  fullWidth
+                >
+                  {isSignUp ? "Sign Up" : "Sign In"}
                 </Button>
-              </form>
+              </Box>
             </div>
-          ) : (
-            <div className="w-full max-w-sm text-center">
-              <h2 className="text-3xl font-semibold mb-3">Sign In</h2>
-              <div className="flex justify-center gap-3 mb-3">
-                <span className="cursor-pointer text-xl">🔵</span>
-                <span className="cursor-pointer text-xl">🔴</span>
-                <span className="cursor-pointer text-xl">⚫</span>
-              </div>
-              <p className="text-gray-500 mb-4">or use your account</p>
-              <form className="flex flex-col gap-3">
-                <TextField label="Email" variant="outlined" size="small" fullWidth />
-                <TextField label="Password" type="password" variant="outlined" size="small" fullWidth />
-                <a href="#" className="text-sm text-blue-500 text-right">
-                  Forgot password?
-                </a>
-                <Button variant="contained" color="error" className="!mt-3" fullWidth>
-                  Sign In
-                </Button>
-              </form>
-            </div>
-          )}
+          </Fade>
         </div>
 
-        {/* Right Overlay Panel */}
-        <div
-          className={`w-1/2 flex flex-col justify-center items-center text-center text-white transition-all duration-700 ${
-            isSignUp ? "bg-gradient-to-r from-pink-500 to-red-500" : "bg-gradient-to-r from-indigo-500 to-blue-500"
-          }`}
-        >
-          {isSignUp ? (
-            <>
-              <h2 className="text-3xl font-semibold mb-3">Welcome Back!</h2>
-              <p className="max-w-xs mb-5">
-                To keep connected with us, please sign in with your personal info
-              </p>
+        {/* Right Section (Showcase Panel) */}
+        <div className="auth-section auth-showcase-panel">
+          <Fade in timeout={1000}>
+            <div className="auth-showcase-content">
+              <Typography
+                variant="h3"
+                fontWeight={700}
+                className="auth-showcase-title"
+                gutterBottom
+              >
+                {isSignUp ? "Welcome Back!" : "Hello, Friend!"}
+              </Typography>
+
+              <Typography
+                variant="body1"
+                sx={{ maxWidth: 320, mb: 5, opacity: 0.9 }}
+              >
+                {isSignUp
+                  ? "To keep connected with us, please sign in with your personal info."
+                  : "Enter your personal details and start your journey with us."}
+              </Typography>
+
               <Button
                 variant="outlined"
-                onClick={() => setIsSignUp(false)}
-                sx={{ borderColor: "#fff", color: "#fff" }}
+                onClick={() => setIsSignUp(!isSignUp)}
+                // MUI SX styles kept for component customization
+                sx={{
+                  borderColor: "#fff",
+                  color: "#fff",
+                  borderRadius: "25px",
+                  px: 5,
+                  py: 1,
+                  fontWeight: "bold",
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: "rgba(255,255,255,0.2)",
+                  },
+                }}
               >
-                Sign In
+                {isSignUp ? "Sign In" : "Sign Up"}
               </Button>
-            </>
-          ) : (
-            <>
-              <h2 className="text-3xl font-semibold mb-3">Hello, Friend!</h2>
-              <p className="max-w-xs mb-5">
-                Enter your personal details and start your journey with us
-              </p>
-              <Button
-                variant="outlined"
-                onClick={() => setIsSignUp(true)}
-                sx={{ borderColor: "#fff", color: "#fff" }}
-              >
-                Sign Up
-              </Button>
-            </>
-          )}
+            </div>
+          </Fade>
         </div>
       </div>
     </div>
