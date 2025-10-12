@@ -9,6 +9,7 @@ import {
   Fade,
 } from "@mui/material";
 import { Google, Facebook, LinkedIn } from "@mui/icons-material";
+import {Link} from "react-router-dom"
 
 // -------------------------------------------------------------------
 // THIS LINE CONNECTS THE CSS FILE
@@ -110,7 +111,7 @@ export default function AuthPage() {
                 )}
 
                 <Button
-                  variant="contained"
+                  variant="contained" component = {Link} to = "/dashboardHome"
                   // MUI SX styles kept for component customization
                   sx={{
                     mt: 3,
