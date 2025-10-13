@@ -9,7 +9,12 @@ import {
   Fade,
 } from "@mui/material";
 import { Google, Facebook, LinkedIn } from "@mui/icons-material";
-import "../../styles/pages/auth/Authpage.css";
+import {Link} from "react-router-dom"
+
+// -------------------------------------------------------------------
+// THIS LINE CONNECTS THE CSS FILE
+import "../../styles/pages/auth/Authpage.css"; 
+// -------------------------------------------------------------------
 
 export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -88,8 +93,22 @@ export default function AuthPage() {
                 )}
 
                 <Button
-                  variant="contained"
-                  className="auth-primary-btn"
+                  variant="contained" component = {Link} to = "/dashboardHome"
+                  // MUI SX styles kept for component customization
+                  sx={{
+                    mt: 3,
+                    py: 1.2,
+                    borderRadius: "25px",
+                    backgroundColor: "#fff",
+                    color: "#6b21a8",
+                    fontWeight: "bold",
+                    textTransform: "none",
+                    fontSize: "1rem",
+                    boxShadow: "0px 4px 15px rgba(0,0,0,0.3)",
+                    "&:hover": {
+                      backgroundColor: "#e0e0e0",
+                    },
+                  }}
                   fullWidth
                 >
                   {isSignUp ? "Sign Up" : "Sign In"}
